@@ -1,0 +1,7 @@
+{
+  "name": "birdsapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
