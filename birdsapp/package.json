@@ -11,10 +11,9 @@
     "@testing-library/user-event": "^8.0.3",
     "@types/jest": "^24.0.25",
     "@types/node": "^12.12.24",
-    "@types/react": "^16.9.17",
-    "@types/react-dom": "^16.9.4",
     "@types/react-router": "^5.1.4",
     "@types/react-router-dom": "^5.1.3",
+    "axios": "^0.21.0",
     "ionicons": "^5.0.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
@@ -45,7 +44,9 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "2.4.2"
+    "@capacitor/cli": "2.4.2",
+    "@types/react": "^16.9.55",
+    "@types/react-dom": "^16.9.9"
   },
   "description": "An Ionic project"
 }

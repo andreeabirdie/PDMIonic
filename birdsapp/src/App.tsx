@@ -2,7 +2,9 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
+import {SongProvider} from "./todo/SongProvider";
+import SongList from "./todo/SongList";
+import SongEdit from "./todo/SongEdit";
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -24,14 +26,18 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/home" component={Home} exact={true} />
-        <Route exact path="/" render={() => <Redirect to="/home" />} />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+    <IonApp>
+        <SongProvider>
+            <IonReactRouter>
+                <IonRouterOutlet>
+                    <Route path="/songs" component={SongList} exact={true} />
+                    <Route path="/song" component={SongEdit} exact={true} />
+                    <Route path="/song/:id" component={SongEdit} exact={true} />
+                    <Route exact path="/" render={() => <Redirect to="/songs" />} />
+                </IonRouterOutlet>
+            </IonReactRouter>
+        </SongProvider>
+    </IonApp>
 );
 
 export default App;
