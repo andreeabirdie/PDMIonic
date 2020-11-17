@@ -1,7 +1,7 @@
 export interface SongProps {
-    id?: string;
+    _id?: string;
     title: string;
     streams: number;
     releaseDate: string,
-    hasAwards: string
+    hasAwards: boolean,
 }
