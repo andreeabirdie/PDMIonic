@@ -1,8 +1,8 @@
 # PDMIonic
 This app contains absolutely nothing yet, but it will contain the following/will be able to:
 
-  - a list of items (an item having properties of the following types: numeric, string, date, boolean)
-  - add or edit item
+  - a list of songs (an item having properties of the following types: numeric, string, date, boolean)
+  - add or edit a song
   - authenticate user
   - provide offline support - persist data on the local storage
   - provide online support - synchronize data to/from a remote location
