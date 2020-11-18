@@ -3,5 +3,5 @@ export interface SongProps {
     title: string;
     streams: number;
     releaseDate: string,
-    hasAwards: boolean,
+    hasAwards: boolean
 }

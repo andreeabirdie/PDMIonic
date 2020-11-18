@@ -9,7 +9,7 @@ import {
     IonPage,
     IonTitle,
     IonToolbar,
-    IonLabel, IonCheckbox, IonDatetime
+    IonLabel, IonCheckbox, IonDatetime, IonFabButton, IonFab
 } from '@ionic/react';
 import { getLogger } from '../core';
 import { SongContext } from './SongProvider';
@@ -24,7 +24,7 @@ interface SongEditProps extends RouteComponentProps<{
 }> {}
 
 const SongEdit: React.FC<SongEditProps> = ({ history, match }) => {
-    const { songs, saving, savingError, saveSong } = useContext(SongContext);
+    const { songs, saving, savingError, saveSong, deleteSong } = useContext(SongContext);
     const [title, setTitle] = useState('');
     const [streams, setStreams] = useState(0);
     const [releaseDate, setReleaseDate] = useState('');
@@ -45,6 +45,13 @@ const SongEdit: React.FC<SongEditProps> = ({ history, match }) => {
     const handleSave = () => {
         const editedSong = song ? { ...song, title, streams, releaseDate, hasAwards } : { title, streams, releaseDate, hasAwards };
         saveSong && saveSong(editedSong).then(() => history.goBack());
+    };
+
+    const handleDelete = () => {
+        const editedSong = song
+            ? { ...song, title, streams, releaseDate, hasAwards }
+            : {title, streams, releaseDate, hasAwards };
+        deleteSong && deleteSong(editedSong).then(() => history.goBack());
     };
     log('render');
     return (
@@ -68,6 +75,11 @@ const SongEdit: React.FC<SongEditProps> = ({ history, match }) => {
                 <IonDatetime displayFormat="DD.MM.YYYY" pickerFormat="DD.MM.YYYY" value={releaseDate} onBlur={e => setReleaseDate((moment(e.target.value).format('DD.MM.YYYY')) || '')}/>
                 <IonCheckbox checked={hasAwards} onIonChange={e => setHasAwards(e.detail.checked)}/>
                 <IonLabel>hasAwards</IonLabel>
+                <IonFab vertical="bottom" horizontal="start" slot="fixed">
+                    <IonFabButton onClick={handleDelete}>
+                        delete
+                    </IonFabButton>
+                </IonFab>
                 <IonLoading isOpen={saving} />
                 {savingError && (
                     <div>{savingError.message || 'Failed to save song'}</div>

@@ -7,7 +7,7 @@ interface SongPropsExt extends SongProps {
 }
 
 const Song: React.FC<SongPropsExt> = ({_id, title, streams, releaseDate, hasAwards, onEdit}) => {
-    console.log("title " + title + " streams " + streams + "releaseDate" + releaseDate + " hasAwards " + hasAwards)
+    // console.log("title " + title + " streams " + streams + "releaseDate" + releaseDate + " hasAwards " + hasAwards)
     return (
         <IonItem onClick={() => onEdit(_id)}>
             <IonLabel>{title}</IonLabel>

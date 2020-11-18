@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { getLogger } from '../core';
 import { login as loginApi } from './authApi';
+import { Plugins } from "@capacitor/core";
+const { Storage } = Plugins;
 
 const log = getLogger('AuthProvider');
 
@@ -37,17 +39,6 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [state, setState] = useState<AuthState>(initialState);
     const { isAuthenticated, isAuthenticating, authenticationError, pendingAuthentication, token } = state;
-    useEffect(() => {
-        log('session effect');
-        const sessionToken = sessionStorage.getItem('token');
-        if (sessionToken) {
-            setState({
-                ...state,
-                token: sessionToken,
-                isAuthenticated: true
-            });
-        }
-    }, []);
     const login = useCallback<LoginFn>(loginCallback, []);
     const logout = useCallback<LogoutFn>(logoutCallback, []);
     useEffect(authenticationEffect, [pendingAuthentication]);
@@ -76,17 +67,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             token: '',
             isAuthenticated: false
         });
-        sessionStorage.removeItem("token");
+        (async () => await Storage.clear())();
     }
 
     function authenticationEffect() {
         let canceled = false;
-        authenticate();
+        authenticate()
         return () => {
             canceled = true;
         }
 
         async function authenticate() {
+            var tk = await Storage.get({ key: "token" });
+            if (tk.value) {
+                setState({
+                    ...state,
+                    token: tk.value,
+                    pendingAuthentication: false,
+                    isAuthenticated: true,
+                    isAuthenticating: false,
+                });
+            }
             if (!pendingAuthentication) {
                 log('authenticate, !pendingAuthentication, return');
                 return;
@@ -103,6 +104,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                     return;
                 }
                 log('authenticate succeeded');
+                await Storage.set({key: 'token', value: token})
                 setState({
                     ...state,
                     token,
@@ -110,7 +112,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                     isAuthenticated: true,
                     isAuthenticating: false,
                 });
-                sessionStorage.setItem('token', token);
             } catch (error) {
                 if (canceled) {
                     return;

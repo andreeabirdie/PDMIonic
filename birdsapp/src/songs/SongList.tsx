@@ -20,7 +20,7 @@ import {SongProps} from "./SongProps";
 
 const log = getLogger('SongList');
 
-const offset = 10;
+const offset = 20;
 
 const SongList: React.FC<RouteComponentProps> = ({history}) => {
     const {logout} = useContext(AuthContext);
@@ -30,7 +30,6 @@ const SongList: React.FC<RouteComponentProps> = ({history}) => {
     const [page, setPage] = useState(offset)
 
     useEffect(()=>{
-        log('search term effect')
         setPage(offset)
         fetchData();
     }, [songs]);
