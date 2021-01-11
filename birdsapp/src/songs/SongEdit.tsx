@@ -16,6 +16,7 @@ import { SongContext } from './SongProvider';
 import { RouteComponentProps } from 'react-router';
 import { SongProps } from './SongProps';
 import moment from 'moment';
+import {MyModal} from "../animations/MyModal";
 
 const log = getLogger('SongEdit');
 
@@ -75,6 +76,7 @@ const SongEdit: React.FC<SongEditProps> = ({ history, match }) => {
                 <IonDatetime displayFormat="DD.MM.YYYY" pickerFormat="DD.MM.YYYY" value={releaseDate} onBlur={e => setReleaseDate((moment(e.target.value).format('DD.MM.YYYY')) || '')}/>
                 <IonCheckbox checked={hasAwards} onIonChange={e => setHasAwards(e.detail.checked)}/>
                 <IonLabel>hasAwards</IonLabel>
+                <MyModal/>
                 <IonFab vertical="bottom" horizontal="start" slot="fixed">
                     <IonFabButton onClick={handleDelete}>
                         delete

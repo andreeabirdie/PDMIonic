@@ -20,7 +20,7 @@ import {SongProps} from "./SongProps";
 
 const log = getLogger('SongList');
 
-const offset = 20;
+const offset = 10;
 
 const SongList: React.FC<RouteComponentProps> = ({history}) => {
     const {logout} = useContext(AuthContext);
